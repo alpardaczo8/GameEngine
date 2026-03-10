@@ -1,6 +1,9 @@
  #include <iostream>
+ #include <Core/Application.hpp>
 
  int main(int argc, char* argv[])
  {
-    std::cout << "Hello world";
+       Engine::Application app;
+       app.run();
+       return 0;
  }
