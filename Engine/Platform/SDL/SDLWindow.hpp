@@ -1,7 +1,9 @@
 #pragma once
 
 #include <Platform/IWindow.hpp>
+#include <GLAD/glad.h>
 #include <SDL3/SDL.h>
+#include <SDL3/SDL_video.h>
 #include <string>
 
 namespace Engine
@@ -25,8 +27,8 @@ private:
     void createWindow(int width, int height, const std::string& title);
     void destroyWindow();
 
-    SDL_Window* m_window;
-    SDL_GLContext m_context;
+    SDL_Window* m_window = nullptr;
+    SDL_GLContext m_context = nullptr;
 
     bool m_isOpen = false;
 };

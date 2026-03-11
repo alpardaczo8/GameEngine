@@ -3,7 +3,13 @@
 
  int main(int argc, char* argv[])
  {
-       Engine::Application app;
-       app.run();
-       return 0;
+      try
+      {
+            Engine::Application app;
+            app.run();
+      }
+      catch(const std::exception& e)
+      {
+            std::cout << e.what() << std::endl;
+      }
  }

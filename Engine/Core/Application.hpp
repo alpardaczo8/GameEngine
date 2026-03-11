@@ -2,6 +2,7 @@
 #include <Platform/IWindow.hpp>
 #include <string>
 #include <Platform/SDL/SDLWindow.hpp>
+#include <Renderer/Renderer.hpp>
 #include <memory>
 
 namespace Engine
@@ -11,6 +12,7 @@ class Application
 {
 private:
     std::unique_ptr<IWindow> m_window;
+    Renderer m_renderer;
 public:
     Application(/* args */);
     ~Application();
