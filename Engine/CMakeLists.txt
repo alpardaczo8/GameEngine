@@ -6,6 +6,8 @@ target_sources(engine
         Core/Application.cpp
         Renderer/Renderer.cpp
         Renderer/Shader.cpp
+        Renderer/VertexArray.cpp
+        Renderer/VertexBuffer.cpp
 )
 
 target_include_directories(engine PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})

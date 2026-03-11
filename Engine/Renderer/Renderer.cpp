@@ -19,31 +19,14 @@ void Renderer::init()
          0.0f, 0.5f,0.0f
     };
 
-    glGenVertexArrays(1, &m_VAO);
-    glBindVertexArray(m_VAO);
+    m_VAO = std::make_unique<VertexArray>();
+    m_VBO = std::make_unique<VertexBuffer>(vertices, sizeof(vertices));
 
-    glGenBuffers(1, &m_VBO);
-    glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
+    m_VAO->bind();
+    m_VBO->bind();
 
-    glBufferData(
-        GL_ARRAY_BUFFER, 
-        sizeof(vertices),
-        vertices,
-        GL_STATIC_DRAW
-    );
-
-    glVertexAttribPointer(
-        0,              // shader location
-        3,              // 3 komponens
-        GL_FLOAT,
-        GL_FALSE,
-        3 * sizeof(float),
-        (void*)0
-    );
-
-    glEnableVertexAttribArray(0);
-    GLint enabled;
-    glGetVertexAttribiv(0, GL_VERTEX_ATTRIB_ARRAY_ENABLED, &enabled);
+    m_VAO->setVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+    m_VAO->enableVertexAttribArray(0);
 }
 
 void Renderer::clear()
@@ -58,7 +41,7 @@ void Renderer::draw()
     // Issue draw calls here
     m_shader->use();
     
-    glBindVertexArray(m_VAO);
+    m_VAO->bind();
     glDrawArrays(GL_TRIANGLES, 0, 3);  
 
 }

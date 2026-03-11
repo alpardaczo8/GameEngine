@@ -101,3 +101,26 @@ std::string Shader::loadShaderSource(const char* filePath)
 
     return shaderStream.str();
 }
+
+Shader::Shader(Shader&& other) noexcept
+    : m_ID(other.m_ID)
+{
+    other.m_ID = 0; // Prevent deletion of the resource
+}
+
+Shader& Shader::operator=(Shader&& other) noexcept
+{
+    if (this != &other)
+    {
+        // Clean up existing resource
+        if (m_ID)
+        {
+            glDeleteProgram(m_ID);
+        }
+
+        // Transfer ownership
+        m_ID = other.m_ID;
+        other.m_ID = 0; // Prevent deletion of the resource
+    }
+    return *this;
+}
