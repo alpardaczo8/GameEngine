@@ -4,6 +4,7 @@ target_sources(engine
     PRIVATE
         Platform/SDL/SDLWindow.cpp
         Core/Application.cpp
+        Core/Logger.cpp
         Renderer/Renderer.cpp
         Renderer/Shader.cpp
         Renderer/VertexArray.cpp
