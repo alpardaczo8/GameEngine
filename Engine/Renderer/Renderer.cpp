@@ -16,14 +16,23 @@ void Renderer::init()
     {
         -0.5f,-0.5f,0.0f,
          0.5f,-0.5f,0.0f,
-         0.0f, 0.5f,0.0f
+         -0.5f, 0.5f,0.0f,
+         0.5f, 0.5f,0.0f
+    };
+
+    unsigned int indicies[] = 
+    {
+        0, 1, 2,
+        2, 1, 3
     };
 
     m_VAO = std::make_unique<VertexArray>();
     m_VBO = std::make_unique<VertexBuffer>(vertices, sizeof(vertices));
+    m_IBO = std::make_unique<IndexBuffer>(indicies, /*sizeof(indicies) / sizeof(unsigned int)*/ 6);
 
     m_VAO->bind();
     m_VBO->bind();
+    m_IBO->bind();
 
     m_VAO->setVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
     m_VAO->enableVertexAttribArray(0);
@@ -42,6 +51,6 @@ void Renderer::draw()
     m_shader->use();
     
     m_VAO->bind();
-    glDrawArrays(GL_TRIANGLES, 0, 3);  
-
+    m_IBO->bind();
+    glDrawElements(GL_TRIANGLES, m_IBO->getCount(), GL_UNSIGNED_INT, nullptr);
 }

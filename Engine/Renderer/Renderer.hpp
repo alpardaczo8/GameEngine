@@ -6,6 +6,7 @@
 #include <Renderer/Shader.hpp>
 #include <Renderer/VertexArray.hpp>
 #include <Renderer/VertexBuffer.hpp>
+#include <Renderer/IndexBuffer.hpp>
 
 class Renderer {
 public:
@@ -16,5 +17,6 @@ public:
 private:
     std::unique_ptr<VertexArray> m_VAO;
     std::unique_ptr<VertexBuffer> m_VBO;
+    std::unique_ptr<IndexBuffer> m_IBO;
     std::unique_ptr<Shader> m_shader;
 };
