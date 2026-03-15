@@ -4,19 +4,11 @@
 
 #include <GLAD/glad.h>
 #include <Renderer/Shader.hpp>
-#include <Renderer/VertexArray.hpp>
-#include <Renderer/VertexBuffer.hpp>
-#include <Renderer/IndexBuffer.hpp>
+#include <Renderer/Mesh.hpp>
 
 class Renderer {
 public:
     void init();
     void clear();
-    void draw();
-
-private:
-    std::unique_ptr<VertexArray> m_VAO;
-    std::unique_ptr<VertexBuffer> m_VBO;
-    std::unique_ptr<IndexBuffer> m_IBO;
-    std::unique_ptr<Shader> m_shader;
+    void draw(const Mesh& mesh, const Shader& shader);
 };

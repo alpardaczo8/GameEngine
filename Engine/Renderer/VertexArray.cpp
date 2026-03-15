@@ -25,6 +25,21 @@ void VertexArray::unbind() const
     glBindVertexArray(0);
 }
 
+void VertexArray::addVertexBuffer(const VertexBuffer& vb, const VertexBufferLayout& layout)
+{
+    bind();
+    vb.bind();
+    const auto& elements = layout.getLayout();
+    unsigned int offset = 0;
+    for (unsigned int i = 0; i < elements.size(); i++)
+    {
+        const auto& element = elements[i];
+        setVertexAttribPointer(i, element.count, element.type, element.normalized, layout.getStride(), (const void*)offset);
+        enableVertexAttribArray(i);
+        offset += element.count * VertexBufferElement::getSizeOfType(element.type);
+    }
+}
+
 void VertexArray::setVertexAttribPointer(GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const void* pointer) const
 {
     glVertexAttribPointer(index, size, type, normalized, stride, pointer);
