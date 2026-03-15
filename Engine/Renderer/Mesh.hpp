@@ -1,6 +1,7 @@
 #pragma once
 
 #include <memory>
+#include <vector>
 
 #include <Renderer/VertexArray.hpp>
 #include <Renderer/VertexBuffer.hpp>
@@ -9,7 +10,10 @@
 
 class Mesh {
 public:
-    Mesh(const void *vertices, unsigned int vertexSize, const unsigned int* indices, unsigned int indexCount, const VertexBufferLayout& layout);
+    Mesh(const void *vertices, const unsigned int* indices, int indexCount, const VertexBufferLayout& layout);
+    Mesh(std::vector<float> verticies,
+            std::vector<unsigned int> indicies,
+            const VertexBufferLayout& layout);
     ~Mesh();
 
     void bind() const;
@@ -17,9 +21,12 @@ public:
 
     int getIndexCount() const { return m_indexCount; }
 
+    Mesh (const Mesh&) = delete;
+    Mesh& operator=(const Mesh&) = delete;
+
 private:
-    std::unique_ptr<VertexArray> m_VAO;
-    std::unique_ptr<VertexBuffer> m_VBO;
-    std::unique_ptr<IndexBuffer> m_IBO;
+    VertexArray m_VAO;
+    VertexBuffer m_VBO;
+    IndexBuffer m_IBO;
     int m_indexCount;
 };

@@ -1,7 +1,7 @@
 #include <Renderer/VertexBufferLayout.hpp>
 
 
-VertexBufferLayout::VertexBufferLayout(const void *data, unsigned int size)
+VertexBufferLayout::VertexBufferLayout()
     : m_stride(0)
 {
     // Constructor implementation (if needed)

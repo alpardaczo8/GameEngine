@@ -25,7 +25,7 @@ struct VertexBufferElement
 
 class VertexBufferLayout {
 public:
-    VertexBufferLayout(const void *data, unsigned int size);
+    VertexBufferLayout();
     ~VertexBufferLayout();
 
     template<typename T>

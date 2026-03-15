@@ -2,6 +2,8 @@
 #include "Renderer/Renderer.hpp"
 #include "Core/Logger.hpp"
 
+#include <vector>
+
 namespace Engine
 {   
 Application::Application(/* args */)
@@ -18,23 +20,22 @@ Application::~Application()
 void Application::run()
 {
     m_renderer.init();
-    float vertices[] =
-    {
+
+    std::vector<float> verticies = {
         -0.5f,-0.5f,0.0f,
         0.5f,-0.5f,0.0f,
         -0.5f, 0.5f,0.0f,
         0.5f, 0.5f,0.0f
     };
 
-    unsigned int indicies[] = 
-    {
+    std::vector<unsigned int> indicies = {
          0, 1, 2,
         2, 1, 3
     };
 
-    VertexBufferLayout layout(vertices, sizeof(vertices));
+    VertexBufferLayout layout;
     layout.push<float>(3); // 3 floats per vertex (x, y, z)
-    Mesh mesh(vertices, sizeof(vertices), indicies, sizeof(indicies) / sizeof(unsigned int), layout);
+    Mesh mesh(verticies, indicies, layout);
     Shader shader("assets/triangle.vert", "assets/triangle.frag");
 
     // Main application loop
