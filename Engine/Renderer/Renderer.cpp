@@ -18,9 +18,9 @@ void Renderer::clear()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
-void Renderer::draw(const Mesh& mesh, const Shader& shader)
+void Renderer::draw(const Mesh& mesh, const Material& material)
 {
-    shader.use();
+    material.use();
     mesh.bind();
     glDrawElements(GL_TRIANGLES, mesh.getIndexCount(), GL_UNSIGNED_INT, nullptr);
 }

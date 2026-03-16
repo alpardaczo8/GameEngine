@@ -12,6 +12,7 @@ target_sources(engine
         Renderer/IndexBuffer.cpp
         Renderer/VertexBufferLayout.cpp
         Renderer/Mesh.cpp
+        Renderer/Material.cpp
 )
 
 target_include_directories(engine PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})

@@ -36,7 +36,7 @@ void Application::run()
     VertexBufferLayout layout;
     layout.push<float>(3); // 3 floats per vertex (x, y, z)
     Mesh mesh(verticies, indicies, layout);
-    Shader shader("assets/triangle.vert", "assets/triangle.frag");
+    Material material("BasicMaterial", std::make_shared<Shader>("assets/triangle.vert", "assets/triangle.frag"));
 
     // Main application loop
     while (!m_window->shouldClose())
@@ -44,7 +44,7 @@ void Application::run()
         m_window->pollEvents();
         // Update and render your application here
         m_renderer.clear();
-        m_renderer.draw(mesh, shader);
+        m_renderer.draw(mesh, material);
         m_window->swapBuffers();
     }
 }
