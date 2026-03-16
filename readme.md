@@ -37,15 +37,15 @@ Simulation (long-term goal)
 
 The engine is structured into modular subsystems.
 
-engine/
- ├─ core/        Core utilities (logging, assertions)
- ├─ renderer/    Rendering abstraction over OpenGL
- ├─ math/        Vector and matrix math (planned)
- ├─ ecs/         Entity component system (planned)
- ├─ resources/   Asset management (planned)
 
-sandbox/
- └─ Example application used for testing the engine
++ engine
+    + core -        Core utilities (logging, assertions)
+    + renderer -    Rendering abstraction over OpenGL
+    + math -        Vector and matrix math (planned)
+    + ecs -         Entity component system (planned)
+    + resources -   Asset management (planned)
++ sandbox/
+    + Example application used for testing the engine
 
 ## Build
 
