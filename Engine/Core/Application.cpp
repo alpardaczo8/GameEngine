@@ -44,7 +44,10 @@ void Application::run()
         m_window->pollEvents();
         // Update and render your application here
         m_renderer.clear();
-        m_renderer.draw(mesh, material);
+
+        m_renderer.beginScene();
+        m_renderer.submit(mesh, material);
+        m_renderer.endScene();
         m_window->swapBuffers();
     }
 }

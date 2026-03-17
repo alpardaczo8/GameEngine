@@ -21,6 +21,8 @@ public:
 
     int getIndexCount() const { return m_indexCount; }
 
+    VertexArray* getVAO() const { return const_cast<VertexArray*>(&m_VAO); }
+
     Mesh (const Mesh&) = delete;
     Mesh& operator=(const Mesh&) = delete;
 

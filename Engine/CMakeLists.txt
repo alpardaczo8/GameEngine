@@ -6,6 +6,7 @@ target_sources(engine
         Core/Application.cpp
         Core/Logger.cpp
         Renderer/Renderer.cpp
+        Renderer/RenderCommand.cpp
         Renderer/Shader.cpp
         Renderer/VertexArray.cpp
         Renderer/VertexBuffer.cpp
@@ -15,10 +16,21 @@ target_sources(engine
         Renderer/Material.cpp
 )
 
+include(FetchContent)
+
+FetchContent_Declare(
+    glm
+    GIT_REPOSITORY https://github.com/g-truc/glm.git
+    GIT_TAG 1.0.3
+)
+
+FetchContent_MakeAvailable(glm)
+
 target_include_directories(engine PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
 target_link_libraries(engine
     PUBLIC
         SDL3::SDL3
         GLAD
+        glm
 )

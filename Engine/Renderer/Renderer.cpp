@@ -1,26 +1,42 @@
 #include <Renderer/Renderer.hpp>
+#include <Renderer/RenderCommand.hpp>
+
 #include <iostream>
 
 void Renderer::init()
 {
-    // Initialize OpenGL state here
-    glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
-    glBindFramebuffer(GL_FRAMEBUFFER, 0);
-    glViewport(0,0,800,600);
-    glEnable(GL_DEPTH_TEST);
-    glEnable(GL_BLEND);
+    RenderCommand::init();
 }
 
 void Renderer::clear()
 {
     // Clear the screen
-    glClearColor(0.1f, 0.1f, 0.15f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    RenderCommand::setClearColor({0.1f, 0.1f, 0.1f, 1.0f});
+    RenderCommand::clear();
 }
 
-void Renderer::draw(const Mesh& mesh, const Material& material)
+void Renderer::beginScene()
 {
-    material.use();
-    mesh.bind();
-    glDrawElements(GL_TRIANGLES, mesh.getIndexCount(), GL_UNSIGNED_INT, nullptr);
+    m_renderQueue.clear();
+}
+
+void Renderer::endScene()
+{
+    flush();
+}
+
+void Renderer::submit(const Mesh& mesh, const Material& material)
+{
+    
+    m_renderQueue.push_back({&mesh, &material});
+}
+
+void Renderer::flush()
+{
+
+    for (const auto& item : m_renderQueue)
+    {
+        item.material->use();
+        RenderCommand::drawIndexed(*item.mesh->getVAO(), item.mesh->getIndexCount());
+    }
 }
