@@ -1,8 +1,14 @@
 #include "Renderer/Shader.hpp"
+
+#include <Core/Logger.hpp>
+
 #include <fstream>
 #include <sstream>
-#include <GLAD/glad.h>
 #include <iostream>
+
+#include <GLAD/glad.h>
+
+#include <glm/gtc/type_ptr.hpp>
 
 Shader::Shader()
 {
@@ -84,6 +90,17 @@ Shader::~Shader()
 void Shader::use() const
 {
     glUseProgram(m_ID);
+}
+
+void Shader::setMat4(const std::string& name, const glm::mat4& matrix) const
+{
+    int location = glGetUniformLocation(m_ID, name.c_str());
+    if (location == -1)
+    {
+        ENG_ERROR("Uniform " + name + " not found in shader program");
+        return;
+    }
+    glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(matrix));
 }
 
 std::string Shader::loadShaderSource(const char* filePath)

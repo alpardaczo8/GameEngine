@@ -15,8 +15,9 @@ void Renderer::clear()
     RenderCommand::clear();
 }
 
-void Renderer::beginScene()
+void Renderer::beginScene(const Camera& camera)
 {
+    m_sceneData.viewProjectionMatrix = camera.getProjectionMatrix() * camera.getViewMatrix();
     m_renderQueue.clear();
 }
 
@@ -37,6 +38,8 @@ void Renderer::flush()
     for (const auto& item : m_renderQueue)
     {
         item.material->use();
+        item.material->getShader()->setMat4("u_ViewProjection", m_sceneData.viewProjectionMatrix);
+        item.material->getShader()->setMat4("u_Model", item.modelMatrix);
         RenderCommand::drawIndexed(*item.mesh->getVAO(), item.mesh->getIndexCount());
     }
 }

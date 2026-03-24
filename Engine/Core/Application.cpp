@@ -3,6 +3,8 @@
 #include "Core/Logger.hpp"
 
 #include <vector>
+#include <thread>
+#include <chrono>
 
 namespace Engine
 {   
@@ -37,7 +39,7 @@ void Application::run()
     layout.push<float>(3); // 3 floats per vertex (x, y, z)
     Mesh mesh(verticies, indicies, layout);
     Material material("BasicMaterial", std::make_shared<Shader>("assets/triangle.vert", "assets/triangle.frag"));
-
+    Camera camera(800.0f / 600.0f);
     // Main application loop
     while (!m_window->shouldClose())
     {
@@ -45,10 +47,14 @@ void Application::run()
         // Update and render your application here
         m_renderer.clear();
 
-        m_renderer.beginScene();
+        m_renderer.beginScene(camera);
         m_renderer.submit(mesh, material);
         m_renderer.endScene();
         m_window->swapBuffers();
+
+        std::chrono::milliseconds frameTime(16); // Approximate 60 FPS
+        std::this_thread::sleep_for(frameTime);
+        camera.moveForward(-0.01f);
     }
 }
 

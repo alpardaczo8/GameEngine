@@ -14,6 +14,7 @@ target_sources(engine
         Renderer/VertexBufferLayout.cpp
         Renderer/Mesh.cpp
         Renderer/Material.cpp
+        Renderer/Camera.cpp
 )
 
 include(FetchContent)
