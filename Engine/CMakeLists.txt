@@ -5,6 +5,7 @@ target_sources(engine
         Platform/SDL/SDLWindow.cpp
         Core/Application.cpp
         Core/Logger.cpp
+        Core/Timer.cpp
         Renderer/Renderer.cpp
         Renderer/RenderCommand.cpp
         Renderer/Shader.cpp

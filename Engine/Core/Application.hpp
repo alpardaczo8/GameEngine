@@ -1,8 +1,10 @@
 #pragma once
+
 #include <Platform/IWindow.hpp>
-#include <string>
 #include <Platform/SDL/SDLWindow.hpp>
 #include <Renderer/Renderer.hpp>
+
+#include <string>
 #include <memory>
 
 namespace Engine

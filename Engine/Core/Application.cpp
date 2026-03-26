@@ -1,10 +1,11 @@
 #include "Core/Application.hpp"
-#include "Renderer/Renderer.hpp"
+#include <Core/Timer.hpp>
 #include "Core/Logger.hpp"
+#include "Renderer/Renderer.hpp"
 
-#include <vector>
-#include <thread>
 #include <chrono>
+#include <thread>
+#include <vector>
 
 namespace Engine
 {   
@@ -40,21 +41,29 @@ void Application::run()
     Mesh mesh(verticies, indicies, layout);
     Material material("BasicMaterial", std::make_shared<Shader>("assets/triangle.vert", "assets/triangle.frag"));
     Camera camera(800.0f / 600.0f);
+    Timer timer;
     // Main application loop
     while (!m_window->shouldClose())
     {
+        float deltaTime = timer.getDeltaTime();
         m_window->pollEvents();
         // Update and render your application here
         m_renderer.clear();
 
+        const bool* keyboard = SDL_GetKeyboardState(nullptr);
+
+        if (keyboard[SDL_SCANCODE_W])
+            camera.moveForward(0.01f * deltaTime * 60.0f); // Move forward at a speed of 0.01 units per second
+        if (keyboard[SDL_SCANCODE_S])
+            camera.moveForward(-0.01f * deltaTime * 60.0f); // Move forward at a speed of 0.01 units per second
+        if (keyboard[SDL_SCANCODE_A])
+            camera.moveRight(-0.01f * deltaTime * 60.0f); // Move right at a speed of 0.01 units per second
+        if (keyboard[SDL_SCANCODE_D])
+            camera.moveRight(0.01f * deltaTime * 60.0f); // Move right at a speed of 0.01 units per second
         m_renderer.beginScene(camera);
         m_renderer.submit(mesh, material);
         m_renderer.endScene();
         m_window->swapBuffers();
-
-        std::chrono::milliseconds frameTime(16); // Approximate 60 FPS
-        std::this_thread::sleep_for(frameTime);
-        camera.moveForward(-0.01f);
     }
 }
 
