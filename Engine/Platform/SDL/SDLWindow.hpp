@@ -20,6 +20,8 @@ public:
 
     int getWidth() override;
     int getHeight() override;
+    float getMouseDeltaX() const { return m_mouseDeltaX; }
+    float getMouseDeltaY() const { return m_mouseDeltaY; }
 
     bool shouldClose() const { return !m_isOpen; }
 
@@ -29,6 +31,9 @@ private:
 
     SDL_Window* m_window = nullptr;
     SDL_GLContext m_context = nullptr;
+
+    float m_mouseDeltaX = 0.0f;
+    float m_mouseDeltaY = 0.0f;
 
     bool m_isOpen = false;
 };

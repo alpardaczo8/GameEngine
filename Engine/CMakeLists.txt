@@ -16,6 +16,7 @@ target_sources(engine
         Renderer/Mesh.cpp
         Renderer/Material.cpp
         Renderer/Camera.cpp
+        Renderer/CameraController.cpp
 )
 
 include(FetchContent)

@@ -14,11 +14,18 @@ public:
 
     glm::mat4 getProjectionMatrix() const;
     glm::mat4 getViewMatrix() const;
+    float getYaw() const { return m_yaw; }
+    float getPitch() const { return m_pitch; }
 
-    void setPosition(const glm::vec3& position) { this -> m_position = position; }
+    void setPosition(const glm::vec3& position) { m_position = position; }
+    void setForward(const glm::vec3& forward) { m_forward = forward; }
+    void setUp(const glm::vec3& up) { m_up = up; }
+    void setRight(const glm::vec3& right) { m_right = right; }
+
     void moveForward(float distance);
     void moveRight(float distance);
-    
+    void moveUp(float distance);
+    void rotate(float yawOffset, float pitchOffset);
 
     ~Camera() = default;
 private:

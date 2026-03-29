@@ -8,7 +8,9 @@ namespace Engine
 
 SDLWindow::SDLWindow(int width, int height, const std::string& title)
 {
+    
     createWindow(width, height, title);
+    SDL_SetWindowRelativeMouseMode(m_window, true);
     m_isOpen = true;
 
     if (!gladLoadGLLoader((GLADloadproc)SDL_GL_GetProcAddress))
@@ -24,6 +26,8 @@ SDLWindow::~SDLWindow()
 
 void SDLWindow::pollEvents()
 {
+    m_mouseDeltaX = 0.0f;  // reset before processing new events
+    m_mouseDeltaY = 0.0f;
     SDL_Event event;
     while (SDL_PollEvent(&event))
     {
@@ -31,6 +35,18 @@ void SDLWindow::pollEvents()
         {
             // Handle quit event
             m_isOpen = false;
+        }
+
+        if (event.type == SDL_EVENT_KEY_DOWN)
+        {
+            if (event.key.scancode == SDL_SCANCODE_ESCAPE)
+                m_isOpen = false;
+        }
+
+        if (event.type == SDL_EVENT_MOUSE_MOTION)
+        {
+            m_mouseDeltaX += event.motion.xrel;
+            m_mouseDeltaY += event.motion.yrel;
         }
     }
 }

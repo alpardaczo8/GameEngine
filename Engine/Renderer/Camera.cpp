@@ -30,4 +30,31 @@ void Camera::moveRight(float distance)
     m_position += right * distance;
 }
 
+void Camera::moveUp(float distance)
+{
+    m_position += m_worldUp * distance;
+}
+
+void Camera::rotate(float yawOffset, float pitchOffset) 
+{
+    m_yaw += yawOffset;
+    m_pitch += pitchOffset;
+
+    // Constrain the pitch to prevent screen flipping
+    if (m_pitch > 89.0f)
+        m_pitch = 89.0f;
+    if (m_pitch < -89.0f)
+        m_pitch = -89.0f;
+
+    // Update forward vector
+    glm::vec3 forward;
+    forward.x = cos(glm::radians(m_yaw)) * cos(glm::radians(m_pitch));
+    forward.y = sin(glm::radians(m_pitch));
+    forward.z = sin(glm::radians(m_yaw)) * cos(glm::radians(m_pitch));
+    m_forward = glm::normalize(forward);
+
+    // Recalculate right and up vectors
+    m_right = glm::normalize(glm::cross(m_forward, m_worldUp));
+    m_up = glm::normalize(glm::cross(m_right, m_forward));
+}
 
