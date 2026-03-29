@@ -26,10 +26,11 @@ void Application::run()
     m_renderer.init();
 
     std::vector<float> verticies = {
-        -0.5f,-0.5f,0.0f,
-        0.5f,-0.5f,0.0f,
-        -0.5f, 0.5f,0.0f,
-        0.5f, 0.5f,0.0f
+    //   x      y       z       u      v
+        -0.5f,  -0.5f,  0.0f,   0.0f,   0.0f,
+        0.5f,   -0.5f,  0.0f,   1.0f,   0.0f,
+        -0.5f,  0.5f,   0.0f,   0.0f,   1.0f,
+        0.5f,   0.5f,   0.0f,   1.0f,   1.0f
     };
 
     std::vector<unsigned int> indicies = {
@@ -39,7 +40,9 @@ void Application::run()
 
     VertexBufferLayout layout;
     layout.push<float>(3); // 3 floats per vertex (x, y, z)
+    layout.push<float>(2); // UV
     Mesh mesh(verticies, indicies, layout);
+    auto texture = std::make_shared<Texture>("assets/brick.png");
     Material material("BasicMaterial", std::make_shared<Shader>("assets/triangle.vert", "assets/triangle.frag"));
     Camera camera(800.0f / 600.0f);
     CameraController cameraController(camera);

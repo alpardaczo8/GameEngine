@@ -5,6 +5,8 @@
 // If SDL is ever replaced, add the define back here.
 // #define STB_IMAGE_IMPLEMENTATION
 
+#define STB_IMAGE_IMPLEMENTATION
+#define STB_IMAGE_STATIC
 #include <stb_image.h>
 
 Texture::Texture(const std::string& path)

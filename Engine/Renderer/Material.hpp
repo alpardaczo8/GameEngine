@@ -1,6 +1,8 @@
 #pragma once
 
 #include <Renderer/Shader.hpp>
+#include <Renderer/Texture.hpp>
+
 #include <memory>
 #include <string>
 
@@ -20,4 +22,5 @@ public:
 private:
     std::string m_Name;
     std::shared_ptr<Shader> m_Shader;
+    std::shared_ptr<Texture> m_Texture;
 };

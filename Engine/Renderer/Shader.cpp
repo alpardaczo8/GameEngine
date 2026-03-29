@@ -103,6 +103,17 @@ void Shader::setMat4(const std::string& name, const glm::mat4& matrix) const
     glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(matrix));
 }
 
+void Shader::setInt(const std::string&name, int value) const
+{
+    int location = glGetUniformLocation(m_ID, name.c_str());
+    if (location == -1)
+    {
+        ENG_ERROR("Uniform " + name + " not found in shader program");
+        return;
+    }
+    glUniform1i(location, value);
+}
+
 std::string Shader::loadShaderSource(const char* filePath)
 {
     std::ifstream shaderFile;

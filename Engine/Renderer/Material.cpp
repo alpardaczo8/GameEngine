@@ -10,6 +10,12 @@ void Material::use() const
     if (m_Shader)
     {
         m_Shader->use();
+        
+        if (m_Texture)
+        {
+            m_Texture->bind(0);
+            m_Shader->setInt("u_Texture",0);
+        }
     }
 }
 
