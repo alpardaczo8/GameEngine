@@ -56,14 +56,14 @@ void SDLWindow::swapBuffers()
     SDL_GL_SwapWindow(m_window);
 }
 
-int SDLWindow::getWidth()
+int SDLWindow::getWidth() const
 {
     int width;
     SDL_GetWindowSize(m_window, &width, nullptr);
     return width;
 }
 
-int SDLWindow::getHeight()
+int SDLWindow::getHeight() const
 {
     int height;
     SDL_GetWindowSize(m_window, nullptr, &height);

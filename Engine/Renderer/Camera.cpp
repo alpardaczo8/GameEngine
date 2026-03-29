@@ -26,8 +26,7 @@ void Camera::moveForward(float distance)
 
 void Camera::moveRight(float distance) 
 {
-    glm::vec3 right = glm::normalize(glm::cross(m_forward, m_up));
-    m_position += right * distance;
+    m_position += m_right * distance;
 }
 
 void Camera::moveUp(float distance)

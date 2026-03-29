@@ -17,6 +17,7 @@ target_sources(engine
         Renderer/Material.cpp
         Renderer/Camera.cpp
         Renderer/CameraController.cpp
+        Renderer/Texture.cpp
 )
 
 include(FetchContent)
@@ -29,8 +30,17 @@ FetchContent_Declare(
 
 FetchContent_MakeAvailable(glm)
 
-target_include_directories(engine PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+FetchContent_Declare(
+    stb
+    GIT_REPOSITORY https://github.com/nothings/stb
+)
 
+FetchContent_MakeAvailable(stb)
+
+target_include_directories(engine PUBLIC
+    ${CMAKE_CURRENT_SOURCE_DIR}
+    ${stb_SOURCE_DIR}    
+)
 target_link_libraries(engine
     PUBLIC
         SDL3::SDL3

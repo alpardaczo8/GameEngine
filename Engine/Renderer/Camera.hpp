@@ -18,9 +18,6 @@ public:
     float getPitch() const { return m_pitch; }
 
     void setPosition(const glm::vec3& position) { m_position = position; }
-    void setForward(const glm::vec3& forward) { m_forward = forward; }
-    void setUp(const glm::vec3& up) { m_up = up; }
-    void setRight(const glm::vec3& right) { m_right = right; }
 
     void moveForward(float distance);
     void moveRight(float distance);

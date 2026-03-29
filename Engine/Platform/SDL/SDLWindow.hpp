@@ -18,8 +18,8 @@ public:
     void pollEvents() override;
     void swapBuffers() override;
 
-    int getWidth() override;
-    int getHeight() override;
+    int getWidth() const override;
+    int getHeight() const override;
     float getMouseDeltaX() const { return m_mouseDeltaX; }
     float getMouseDeltaY() const { return m_mouseDeltaY; }
 
