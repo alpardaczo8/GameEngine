@@ -9,7 +9,7 @@
 class Material
 {
 public:
-    Material(const std::string& name, const std::shared_ptr<Shader>& shader);
+    Material(const std::string& name, const std::shared_ptr<Shader>& shader, const std::shared_ptr<Texture>& texture);
     ~Material() = default;
 
     const std::string& getName() const { return m_Name; }

@@ -1,7 +1,7 @@
 #include <Renderer/Material.hpp>
 
-Material::Material(const std::string& name, const std::shared_ptr<Shader>& shader)
-    : m_Name(name), m_Shader(shader)
+Material::Material(const std::string& name, const std::shared_ptr<Shader>& shader, const std::shared_ptr<Texture>& texture)
+    : m_Name(name), m_Shader(shader), m_Texture(texture)
 {
 }
 

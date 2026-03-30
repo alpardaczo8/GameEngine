@@ -43,7 +43,7 @@ void Application::run()
     layout.push<float>(2); // UV
     Mesh mesh(verticies, indicies, layout);
     auto texture = std::make_shared<Texture>("assets/brick.png");
-    Material material("BasicMaterial", std::make_shared<Shader>("assets/triangle.vert", "assets/triangle.frag"));
+    Material material("BasicMaterial", std::make_shared<Shader>("assets/triangle.vert", "assets/triangle.frag"), texture);
     Camera camera(800.0f / 600.0f);
     CameraController cameraController(camera);
     Timer timer;

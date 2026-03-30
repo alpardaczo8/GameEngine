@@ -10,11 +10,6 @@
 
 #include <glm/gtc/type_ptr.hpp>
 
-Shader::Shader()
-{
-    // Constructor implementation (if needed)
-}
-
 Shader::Shader(const char* vertexPath, const char* fragmentPath)
 {
     // Load and compile shaders here
@@ -54,15 +49,12 @@ Shader::Shader(const char* vertexPath, const char* fragmentPath)
     m_ID = glCreateProgram();
     glAttachShader(m_ID, vertex);
     glAttachShader(m_ID, fragment);
-    glBindFragDataLocation(m_ID, 0, "FragColor");
     glLinkProgram(m_ID);
     glGetProgramiv(m_ID, GL_LINK_STATUS, &success);
     if (!success)
     {
         glGetProgramInfoLog(m_ID, 512, nullptr, infoLog);
         throw std::runtime_error("Shader program linking failed: " + std::string(infoLog));
-         char log[512];
-        glGetShaderInfoLog(m_ID, 512, NULL, log);
     }
 
 
@@ -87,6 +79,22 @@ Shader::~Shader()
     }
 }
 
+int Shader::getUniformLocation(const std::string& name) const
+{
+    auto it = m_uniformCache.find(name);
+    if (it != m_uniformCache.end())
+    {
+        return it->second;
+    }
+
+    int location = glGetUniformLocation(m_ID, name.c_str());
+    if (location == -1)
+        ENG_ERROR("Uniform " + name + " not found in shader program");
+    m_uniformCache[name] = location;
+    ENG_INFO("Caching " + name + " uniform variable");
+    return location;
+}
+
 void Shader::use() const
 {
     glUseProgram(m_ID);
@@ -94,24 +102,12 @@ void Shader::use() const
 
 void Shader::setMat4(const std::string& name, const glm::mat4& matrix) const
 {
-    int location = glGetUniformLocation(m_ID, name.c_str());
-    if (location == -1)
-    {
-        ENG_ERROR("Uniform " + name + " not found in shader program");
-        return;
-    }
-    glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(matrix));
+    glUniformMatrix4fv(getUniformLocation(name), 1, GL_FALSE, glm::value_ptr(matrix));
 }
 
 void Shader::setInt(const std::string&name, int value) const
 {
-    int location = glGetUniformLocation(m_ID, name.c_str());
-    if (location == -1)
-    {
-        ENG_ERROR("Uniform " + name + " not found in shader program");
-        return;
-    }
-    glUniform1i(location, value);
+    glUniform1i(getUniformLocation(name), value);
 }
 
 std::string Shader::loadShaderSource(const char* filePath)

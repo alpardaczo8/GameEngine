@@ -1,13 +1,16 @@
 #pragma once
 
 #include <string>
+#include <unordered_map>
 #include <glm/glm.hpp>
 
 class Shader {
 public:
-    Shader();
+    Shader() = default;
     Shader(const char* vertexPath, const char* fragmentPath);
     ~Shader();
+
+    int getUniformLocation(const std::string& name) const;
 
     void use() const;
     void setMat4(const std::string& name, const glm::mat4& value) const;
@@ -21,5 +24,6 @@ public:
 
 private:
     unsigned int m_ID;
+    mutable std::unordered_map<std::string, int> m_uniformCache;
     std::string loadShaderSource(const char* filePath);
 };

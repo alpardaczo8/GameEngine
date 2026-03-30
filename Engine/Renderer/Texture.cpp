@@ -1,18 +1,19 @@
 #include <Renderer/Texture.hpp>
 
-// STB_IMAGE_IMPLEMENTATION is intentionally omitted here —
-// SDL3 vendors its own stb_image and emits the implementation.
-// If SDL is ever replaced, add the define back here.
-// #define STB_IMAGE_IMPLEMENTATION
-
 #define STB_IMAGE_IMPLEMENTATION
 #define STB_IMAGE_STATIC
 #include <stb_image.h>
+
+#include <stdexcept>
 
 Texture::Texture(const std::string& path)
 {
     stbi_set_flip_vertically_on_load(true);
     unsigned char* data = stbi_load(path.c_str(), &m_width, &m_height, &m_channels, 0);
+    if (!data)
+    {
+        throw std::runtime_error("Failed to load texture: " + path);
+    }
     glGenTextures(1, &m_ID);
     glBindTexture(GL_TEXTURE_2D, m_ID);
 
@@ -20,16 +21,17 @@ Texture::Texture(const std::string& path)
     if (m_channels == 1) format = GL_RED;
     else if (m_channels == 3) format = GL_RGB;
     else if (m_channels == 4) format = GL_RGBA;
+    GLenum internalFormat = format;
 
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, m_width, m_height, 0, format, GL_UNSIGNED_BYTE, data);
+    glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, m_width, m_height, 0, format, GL_UNSIGNED_BYTE, data);
     glGenerateMipmap(GL_TEXTURE_2D);
 
-    glBindTexture(GL_TEXTURE_2D, m_ID);
+    glBindTexture(GL_TEXTURE_2D, 0);
     stbi_image_free(data);
 }
 
@@ -51,7 +53,7 @@ Texture::~Texture()
 }
 
 Texture::Texture(Texture&& other) noexcept
-    : m_ID(m_ID), m_height(other.m_height), m_width(other.m_width), m_channels(other.m_channels), m_path(other.m_path)
+    : m_ID(other.m_ID), m_height(other.m_height), m_width(other.m_width), m_channels(other.m_channels), m_path(other.m_path)
 {
     m_ID = 0; // Prevent deletion of the resource
 }
