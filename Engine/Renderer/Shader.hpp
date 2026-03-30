@@ -15,6 +15,7 @@ public:
     void use() const;
     void reload();
     void setMat4(const std::string& name, const glm::mat4& value) const;
+    void setVec3(const std::string& name, const glm::vec3& vec) const;
     void setInt(const std::string& name, int value) const;
 
     Shader(const Shader&) = delete;

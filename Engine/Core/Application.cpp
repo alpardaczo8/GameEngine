@@ -29,11 +29,11 @@ void Application::run()
     m_renderer.init();
 
     std::vector<float> verticies = {
-    //   x      y       z       u      v
-        -0.5f,  -0.5f,  0.0f,   0.0f,   0.0f,
-        0.5f,   -0.5f,  0.0f,   1.0f,   0.0f,
-        -0.5f,  0.5f,   0.0f,   0.0f,   1.0f,
-        0.5f,   0.5f,   0.0f,   1.0f,   1.0f
+    //   x      y       z       nx      ny      nz       u      v
+        -0.5f,  -0.5f,  0.0f,   0.0f,   0.0f,   1.0f,   0.0f,   0.0f,
+        0.5f,   -0.5f,  0.0f,   0.0f,   0.0f,   1.0f,   1.0f,   0.0f,
+        -0.5f,  0.5f,   0.0f,   0.0f,   0.0f,   1.0f,   0.0f,   1.0f,
+        0.5f,   0.5f,   0.0f,   0.0f,   0.0f,   1.0f,   1.0f,   1.0f
     };
 
     std::vector<unsigned int> indicies = {
@@ -43,6 +43,7 @@ void Application::run()
 
     VertexBufferLayout layout;
     layout.push<float>(3); // 3 floats per vertex (x, y, z)
+    layout.push<float>(3); // normals
     layout.push<float>(2); // UV
     Mesh mesh(verticies, indicies, layout);
     auto texture = std::make_shared<Texture>("assets/brick.png");
@@ -50,6 +51,8 @@ void Application::run()
     Camera camera(800.0f / 600.0f);
     CameraController cameraController(camera);
     Timer timer;
+    glm::vec3 lightPos = camera.getPosition();
+    glm::vec3 lightColor(1.0f, 1.0f, 1.0f);
     // Main application loop
     while (!m_window->shouldClose())
     {
@@ -73,6 +76,9 @@ void Application::run()
 
         glm::mat4x4 transform{1.0};
         m_renderer.beginScene(camera);
+        material.getShader()->setVec3("u_LightPos", lightPos);
+        material.getShader()->setVec3("u_LightColor", lightColor);
+        material.getShader()->setVec3("u_ViewPos", camera.getPosition());
         m_renderer.submit(mesh, material, transform);
         transform = glm::translate(transform, glm::vec3{0.5f, 0.0f, 0.0f});
         transform = glm::rotate(transform, glm::radians(90.0f), glm::vec3{0.0f, 1.0f, 0.0f});
