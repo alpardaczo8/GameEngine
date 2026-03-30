@@ -4,6 +4,9 @@
 #include "Renderer/Renderer.hpp"
 #include "Renderer/CameraController.hpp"
 
+#include <glm/mat4x4.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+
 #include <chrono>
 #include <thread>
 #include <vector>
@@ -65,8 +68,12 @@ void Application::run()
         if (dx != 0.0f || dy != 0.0f)
         cameraController.handleMouseMovement(dx, dy);
 
+        glm::mat4x4 transform{1.0};
         m_renderer.beginScene(camera);
-        m_renderer.submit(mesh, material);
+        m_renderer.submit(mesh, material, transform);
+        transform = glm::translate(transform, glm::vec3{0.5f, 0.0f, 0.0f});
+        transform = glm::rotate(transform, glm::radians(90.0f), glm::vec3{0.0f, 1.0f, 0.0f});
+        m_renderer.submit(mesh, material, transform);
         m_renderer.endScene();
         m_window->swapBuffers();
     }

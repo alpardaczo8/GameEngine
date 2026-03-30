@@ -26,10 +26,9 @@ void Renderer::endScene()
     flush();
 }
 
-void Renderer::submit(const Mesh& mesh, const Material& material)
+void Renderer::submit(const Mesh& mesh, const Material& material, const glm::mat4& transform)
 {
-    
-    m_renderQueue.push_back({&mesh, &material});
+    m_renderQueue.push_back({&mesh, &material, transform});
 }
 
 void Renderer::flush()

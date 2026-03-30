@@ -28,7 +28,7 @@ public:
 
     void beginScene(const Camera& camera);
     void endScene();
-    void submit(const Mesh& mesh, const Material& material);
+    void submit(const Mesh& mesh, const Material& material, const glm::mat4& transform = glm::mat4(1.0f));
     void flush();
 
 private:
