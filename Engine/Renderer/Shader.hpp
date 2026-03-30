@@ -13,6 +13,7 @@ public:
     int getUniformLocation(const std::string& name) const;
 
     void use() const;
+    void reload();
     void setMat4(const std::string& name, const glm::mat4& value) const;
     void setInt(const std::string& name, int value) const;
 
@@ -23,7 +24,11 @@ public:
     Shader& operator=(Shader&& other) noexcept;
 
 private:
-    unsigned int m_ID;
+    unsigned int m_ID = 0;
+    std::string m_vertexShaderPath;
+    std::string m_fragmentShaderPath;
     mutable std::unordered_map<std::string, int> m_uniformCache;
     std::string loadShaderSource(const char* filePath);
+
+    void compile();
 };

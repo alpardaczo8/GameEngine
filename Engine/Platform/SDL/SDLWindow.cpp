@@ -31,14 +31,16 @@ void SDLWindow::pollEvents()
     SDL_Event event;
     while (SDL_PollEvent(&event))
     {
+        m_pressedKeys.clear();
         if (event.type == SDL_EVENT_QUIT)
         {
             // Handle quit event
             m_isOpen = false;
         }
 
-        if (event.type == SDL_EVENT_KEY_DOWN)
+        if (event.type == SDL_EVENT_KEY_DOWN && event.key.repeat == 0)
         {
+            m_pressedKeys.insert(event.key.scancode);
             if (event.key.scancode == SDL_SCANCODE_ESCAPE)
                 m_isOpen = false;
         }

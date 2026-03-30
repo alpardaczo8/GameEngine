@@ -58,6 +58,9 @@ void Application::run()
         // Update and render your application here
         m_renderer.clear();
 
+        if (m_window->wasKeyPressed(SDL_SCANCODE_F5))
+            material.getShader()->reload();
+
         const bool* keyboard = SDL_GetKeyboardState(nullptr);
 
         cameraController.handleInput(keyboard, deltaTime);
