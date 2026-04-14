@@ -26,7 +26,7 @@ Application::~Application()
 
 void Application::run()
 {
-    m_renderer.init();
+    m_renderer.init(m_window->getWidth(), m_window->getHeight());
 
     std::vector<float> verticies = {
     //   x      y       z       nx      ny      nz       u      v
@@ -51,12 +51,13 @@ void Application::run()
     Camera camera(800.0f / 600.0f);
     CameraController cameraController(camera);
     Timer timer;
-    glm::vec3 lightPos = camera.getPosition();
+    
     glm::vec3 lightColor(1.0f, 1.0f, 1.0f);
     // Main application loop
     while (!m_window->shouldClose())
     {
         float deltaTime = timer.getDeltaTime();
+        glm::vec3 lightPos = camera.getPosition();
         m_window->pollEvents();
         // Update and render your application here
         m_renderer.clear();

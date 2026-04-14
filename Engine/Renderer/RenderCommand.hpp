@@ -6,7 +6,7 @@
 
 class RenderCommand {
 public:
-    static void init();
+    static void init(int height, int width);
     static void drawIndexed(const VertexArray& VAO, unsigned int indexCount);
     static void clear();
     static void setClearColor(const glm::vec4& color);

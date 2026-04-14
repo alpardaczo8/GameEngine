@@ -1,11 +1,11 @@
 #include <Renderer/RenderCommand.hpp>
 
-void RenderCommand::init()
+void RenderCommand::init(int width, int height)
 {
     // Initialize OpenGL state here
     glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
-    glViewport(0,0,800,600);
+    glViewport(0, 0, width, height);
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_BLEND);
 }

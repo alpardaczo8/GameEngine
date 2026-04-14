@@ -23,7 +23,7 @@ struct SceneData
 
 class Renderer {
 public:
-    void init();
+    void init(int height, int width);
     void clear();
 
     void beginScene(const Camera& camera);

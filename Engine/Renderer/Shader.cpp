@@ -97,16 +97,6 @@ void Shader::compile()
         throw std::runtime_error("Shader program linking failed: " + std::string(infoLog));
     }
 
-
-    glValidateProgram(m_ID);
-	glGetProgramiv(m_ID, GL_VALIDATE_STATUS, &success);
-	if (!success) 
-	{
-		glGetProgramInfoLog(m_ID, sizeof(infoLog), NULL, infoLog);
-        glDeleteShader(vertex);
-        glDeleteShader(fragment);
-		throw std::runtime_error("Shader validation failed: " + std::string(infoLog));
-	}
     // Clean up shaders as they're linked into our program now and no longer necessary
     glDeleteShader(vertex);
     glDeleteShader(fragment);

@@ -3,9 +3,9 @@
 
 #include <iostream>
 
-void Renderer::init()
+void Renderer::init(int height, int width)
 {
-    RenderCommand::init();
+    RenderCommand::init(height, width);
 }
 
 void Renderer::clear()

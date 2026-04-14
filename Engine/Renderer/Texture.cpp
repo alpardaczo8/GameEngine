@@ -55,7 +55,7 @@ Texture::~Texture()
 Texture::Texture(Texture&& other) noexcept
     : m_ID(other.m_ID), m_height(other.m_height), m_width(other.m_width), m_channels(other.m_channels), m_path(other.m_path)
 {
-    m_ID = 0; // Prevent deletion of the resource
+    other.m_ID = 0; // Prevent deletion of the resource
 }
 
 Texture& Texture::operator=(Texture&& other) noexcept 
