@@ -13,6 +13,7 @@ public:
 
     virtual float getMouseDeltaX() const = 0;
     virtual float getMouseDeltaY() const = 0;
+    virtual float getScrollDeltaY() const = 0;
 
     virtual bool shouldClose() const = 0;
     virtual bool wasKeyPressed(int scancode) const = 0;

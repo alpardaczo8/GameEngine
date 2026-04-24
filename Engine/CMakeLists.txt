@@ -18,6 +18,7 @@ target_sources(engine
         Renderer/Camera.cpp
         Renderer/CameraController.cpp
         Renderer/Texture.cpp
+        Renderer/RTSCameraController.cpp
 )
 
 include(FetchContent)

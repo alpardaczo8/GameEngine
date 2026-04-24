@@ -11,6 +11,8 @@ public:
 
     const glm::vec3& getPosition() const { return m_position; }
     const glm::vec3& getUp() const { return m_up; }
+    const glm::vec3& getRight() const { return m_right; }
+    const glm::vec3& getForward() const { return m_forward; }
 
     glm::mat4 getProjectionMatrix() const;
     glm::mat4 getViewMatrix() const;
@@ -26,7 +28,7 @@ public:
 
     ~Camera() = default;
 private:
-    glm::vec3 m_position {0.0f, 0.0f, 3.0f};
+    glm::vec3 m_position {0.0f, 1.0f, 3.0f};
 
     glm::vec3 m_forward {0.0f, 0.0f, -1.0f};
     glm::vec3 m_up    {0.0f, 1.0f, 0.0f};

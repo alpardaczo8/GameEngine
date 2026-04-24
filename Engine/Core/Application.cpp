@@ -3,6 +3,7 @@
 #include "Core/Logger.hpp"
 #include "Renderer/Renderer.hpp"
 #include "Renderer/CameraController.hpp"
+#include "Renderer/RTSCameraController.hpp"
 
 #include <glm/mat4x4.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -49,7 +50,7 @@ void Application::run()
     auto texture = std::make_shared<Texture>("assets/brick.png");
     Material material("BasicMaterial", std::make_shared<Shader>("assets/triangle.vert", "assets/triangle.frag"), texture);
     Camera camera(800.0f / 600.0f);
-    CameraController cameraController(camera);
+    RTSCameraController cameraController(camera);
     Timer timer;
     
     glm::vec3 lightColor(1.0f, 1.0f, 1.0f);
@@ -73,17 +74,30 @@ void Application::run()
         float dy = m_window->getMouseDeltaY();
 
         if (dx != 0.0f || dy != 0.0f)
-        cameraController.handleMouseMovement(dx, dy);
-
+            cameraController.handleMouseMovement(dx, dy);
+        
+        
+        float dz = m_window->getScrollDeltaY();
+        if (dz != 0.0f)
+        {
+            ENG_INFO("Scroll delta:" + std::to_string(dz));
+            cameraController.handleMouseScroll(dz);
+        }
+        ENG_INFO("Camera position:" + std::to_string(camera.getPosition().x) + ", " + std::to_string(camera.getPosition().y) + ", " + std::to_string(camera.getPosition().z));
+        
         glm::mat4x4 transform{1.0};
         m_renderer.beginScene(camera);
+
         material.getShader()->setVec3("u_LightPos", lightPos);
         material.getShader()->setVec3("u_LightColor", lightColor);
         material.getShader()->setVec3("u_ViewPos", camera.getPosition());
+
         m_renderer.submit(mesh, material, transform);
+
         transform = glm::translate(transform, glm::vec3{0.5f, 0.0f, 0.0f});
         transform = glm::rotate(transform, glm::radians(90.0f), glm::vec3{0.0f, 1.0f, 0.0f});
         m_renderer.submit(mesh, material, transform);
+        
         m_renderer.endScene();
         m_window->swapBuffers();
     }

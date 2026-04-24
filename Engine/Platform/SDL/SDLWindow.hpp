@@ -24,6 +24,7 @@ public:
     int getHeight() const override;
     float getMouseDeltaX() const { return m_mouseDeltaX; }
     float getMouseDeltaY() const { return m_mouseDeltaY; }
+    float getScrollDeltaY() const { return m_scrollDeltaY; }
 
     bool shouldClose() const { return !m_isOpen; }
     bool wasKeyPressed(int scancode) const { return m_pressedKeys.count(scancode) > 0; }
@@ -37,6 +38,7 @@ private:
 
     float m_mouseDeltaX = 0.0f;
     float m_mouseDeltaY = 0.0f;
+    float m_scrollDeltaY = 0.0f;
     std::unordered_set<int> m_pressedKeys;
 
     bool m_isOpen = false;

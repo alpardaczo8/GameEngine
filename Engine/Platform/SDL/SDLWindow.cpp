@@ -28,6 +28,7 @@ void SDLWindow::pollEvents()
 {
     m_mouseDeltaX = 0.0f;  // reset before processing new events
     m_mouseDeltaY = 0.0f;
+    m_scrollDeltaY = 0.0f;
     SDL_Event event;
     while (SDL_PollEvent(&event))
     {
@@ -49,6 +50,10 @@ void SDLWindow::pollEvents()
         {
             m_mouseDeltaX += event.motion.xrel;
             m_mouseDeltaY += event.motion.yrel;
+        }
+        if (event.type == SDL_EVENT_MOUSE_WHEEL)
+        {
+            m_scrollDeltaY += event.wheel.y;
         }
     }
 }
